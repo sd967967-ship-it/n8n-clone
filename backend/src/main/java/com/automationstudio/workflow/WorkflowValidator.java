@@ -19,11 +19,13 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.springframework.stereotype.Component;
 
 /**
  * Server-side workflow validator. Browser is never trusted.
  * Returns errors (block run, status DRAFT) and warnings (never block).
  */
+@Component
 public class WorkflowValidator {
 
   private static final Set<String> MVP_TYPES =

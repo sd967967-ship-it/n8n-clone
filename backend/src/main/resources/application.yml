@@ -22,3 +22,18 @@ engine:
   max-concurrent-executions: ${ENGINE_MAX_CONCURRENT_EXECUTIONS:8}
   workflow-max-duration-ms: ${WORKFLOW_MAX_DURATION_MS:900000}
   node-default-timeout-ms: ${NODE_DEFAULT_TIMEOUT_MS:60000}
+  max-stored-output-bytes: ${MAX_STORED_OUTPUT_BYTES:262144}
+
+http:
+  connect-timeout-ms: ${HTTP_CONNECT_TIMEOUT_MS:10000}
+  read-timeout-ms: ${HTTP_READ_TIMEOUT_MS:30000}
+
+llm:
+  timeout-ms: ${LLM_TIMEOUT_MS:180000}
+  max-attempts: 5
+
+secrets:
+  key: ${SECRETS_KEY:}
+
+security:
+  http-allow-private: ${HTTP_ALLOW_PRIVATE:false}

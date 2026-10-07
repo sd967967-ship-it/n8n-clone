@@ -19,9 +19,13 @@ Frontend canvas scaffold + Playwright smoke test included.
 ## Quick start
 
 ```bash
-cp .env.example .env   # set SECRETS_KEY + OPENROUTER_API_KEY; never commit .env
-docker compose up -d             # postgres
-cd backend && mvn test           # validator + expression unit tests
+cp .env.example .env   # set SECRETS_KEY (32-byte base64) + OPENROUTER_API_KEY; never commit .env
+# local postgres (user-mode, no admin service needed):
+#   initdb + pg_ctl from portable binaries, then:
+#   psql -h 127.0.0.1 -U postgres -c "CREATE DATABASE automation_studio;"
+cd backend && mvn test           # validator + expression + pieces unit tests
+# run API (needs Postgres + SECRETS_KEY in env):
+#   $env:SECRETS_KEY='...'; mvn spring-boot:run   # API on http://127.0.0.1:8080
 cd frontend && npm install && npm run dev   # canvas on http://127.0.0.1:5173
 ```
 

@@ -11,6 +11,7 @@ export type NodeType =
 export interface WorkflowNodeData {
   label: string;
   nodeType: NodeType;
+  config?: Record<string, unknown>;
   [key: string]: unknown;
 }
 

@@ -1,0 +1,55 @@
+tiers:
+  - id: qwen-primary
+    provider: openrouter
+    model: qwen/qwen3-coder:free
+    priority: 1
+    quotaScope: provider
+    capabilities: [json, tools]
+    contextTokens: 32768
+  - id: openrouter-alt-1
+    provider: openrouter
+    model: nvidia/nemotron-3-nano-30b-a3b:free
+    priority: 2
+    quotaScope: provider
+    capabilities: [json]
+    contextTokens: 32768
+  - id: openrouter-alt-2
+    provider: openrouter
+    model: openai/gpt-oss-120b:free
+    priority: 3
+    quotaScope: provider
+    capabilities: [json]
+    contextTokens: 16384
+  - id: openrouter-alt-3
+    provider: openrouter
+    model: meta-llama/llama-3.3-70b-instruct:free
+    priority: 4
+    quotaScope: provider
+    capabilities: [json]
+    contextTokens: 16384
+  - id: local-ollama
+    provider: ollama
+    model: qwen2.5-coder:3b
+    priority: 100
+    quotaScope: model
+    capabilities: [json]
+    contextTokens: 8192
+
+providers:
+  openrouter:
+    baseUrl: ${OPENROUTER_BASE_URL:https://openrouter.ai/api/v1}
+    apiKeyEnv: OPENROUTER_API_KEY
+    quotaScope: provider
+  ollama:
+    baseUrl: ${OLLAMA_BASE_URL:http://127.0.0.1:11434}
+    apiKeyEnv: ""
+    quotaScope: model
+
+policy:
+  maxAttemptsPerRequest: 5
+  softFailToNextTier: true
+  tokenBucketRpm: 20
+  tokenBucketWaitMaxMs: 2000
+  cooldownMs: 60000
+  circuitOpenMs: 900000
+  circuitFailures: 3
