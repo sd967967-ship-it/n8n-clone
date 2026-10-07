@@ -1,0 +1,18 @@
+# env / secrets
+.env
+!.env.example
+
+# node
+node_modules/
+frontend/dist/
+frontend/playwright-report/
+frontend/test-results/
+
+# java
+backend/target/
+*.class
+
+# misc
+.DS_Store
+.idea/
+.vscode/

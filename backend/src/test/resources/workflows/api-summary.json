@@ -1,0 +1,49 @@
+{
+  "version": 1,
+  "name": "API Summary",
+  "description": "Fetch posts from a public API and summarize them with AI",
+  "nodes": [
+    {
+      "id": "trigger_1",
+      "type": "manual_trigger",
+      "name": "Start",
+      "position": { "x": 100, "y": 200 },
+      "config": { "payload": {} }
+    },
+    {
+      "id": "http_1",
+      "type": "http_request",
+      "name": "Fetch Posts",
+      "position": { "x": 350, "y": 200 },
+      "config": {
+        "method": "GET",
+        "url": "https://jsonplaceholder.typicode.com/posts?_limit=5"
+      },
+      "settings": { "retries": 2, "timeoutMs": 30000, "onError": "stop" }
+    },
+    {
+      "id": "llm_1",
+      "type": "llm",
+      "name": "Summarize",
+      "position": { "x": 650, "y": 200 },
+      "config": {
+        "model": "default",
+        "prompt": "Summarize these posts in two sentences:\n{{http_1.output.body}}",
+        "outputFormat": "text"
+      }
+    },
+    {
+      "id": "output_1",
+      "type": "output",
+      "name": "Summary",
+      "position": { "x": 950, "y": 200 },
+      "config": { "value": "{{llm_1.output.text}}" }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger_1", "target": "http_1" },
+    { "id": "e2", "source": "http_1", "target": "llm_1" },
+    { "id": "e3", "source": "llm_1", "target": "output_1" }
+  ],
+  "pinData": {}
+}

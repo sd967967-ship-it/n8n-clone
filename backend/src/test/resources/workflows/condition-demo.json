@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "name": "Condition Demo",
+  "description": "Branch on a score carried by the manual trigger",
+  "nodes": [
+    {
+      "id": "trigger_1",
+      "type": "manual_trigger",
+      "name": "Start",
+      "position": { "x": 100, "y": 200 },
+      "config": { "payload": { "score": 72 } }
+    },
+    {
+      "id": "condition_1",
+      "type": "condition",
+      "name": "Passed?",
+      "position": { "x": 400, "y": 200 },
+      "config": { "expression": "trigger_1.output.score >= 50" }
+    },
+    {
+      "id": "output_pass",
+      "type": "output",
+      "name": "Passed",
+      "position": { "x": 700, "y": 100 },
+      "config": { "value": "Score {{trigger_1.output.score}}: passed." }
+    },
+    {
+      "id": "output_fail",
+      "type": "output",
+      "name": "Failed",
+      "position": { "x": 700, "y": 300 },
+      "config": { "value": "Score {{trigger_1.output.score}}: failed." }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger_1", "target": "condition_1" },
+    { "id": "e2", "source": "condition_1", "target": "output_pass", "sourceHandle": "true" },
+    { "id": "e3", "source": "condition_1", "target": "output_fail", "sourceHandle": "false" }
+  ],
+  "pinData": {}
+}

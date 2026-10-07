@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "name": "Weather AI Assistant",
+  "description": "Fetch weather and decide whether an umbrella is needed",
+  "nodes": [
+    {
+      "id": "trigger_1",
+      "type": "manual_trigger",
+      "name": "Start",
+      "position": { "x": 100, "y": 200 },
+      "config": { "payload": {} }
+    },
+    {
+      "id": "http_1",
+      "type": "http_request",
+      "name": "Get Weather",
+      "position": { "x": 350, "y": 200 },
+      "config": {
+        "method": "GET",
+        "url": "https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,precipitation&daily=precipitation_probability_max&timezone=auto"
+      },
+      "settings": { "retries": 2, "timeoutMs": 30000, "onError": "stop" }
+    },
+    {
+      "id": "llm_1",
+      "type": "llm",
+      "name": "Analyze Weather",
+      "position": { "x": 650, "y": 200 },
+      "config": {
+        "model": "default",
+        "prompt": "Given this weather data, do I need an umbrella today?\n{{http_1.output.body}}",
+        "outputFormat": "json",
+        "jsonShape": { "needs_umbrella": "boolean", "reason": "string" }
+      }
+    },
+    {
+      "id": "condition_1",
+      "type": "condition",
+      "name": "Umbrella?",
+      "position": { "x": 950, "y": 200 },
+      "config": { "expression": "llm_1.output.json.needs_umbrella == true" }
+    },
+    {
+      "id": "output_yes",
+      "type": "output",
+      "name": "Take umbrella",
+      "position": { "x": 1250, "y": 100 },
+      "config": { "value": "Take an umbrella. {{llm_1.output.json.reason}}" }
+    },
+    {
+      "id": "output_no",
+      "type": "output",
+      "name": "No umbrella",
+      "position": { "x": 1250, "y": 300 },
+      "config": { "value": "No umbrella needed. {{llm_1.output.json.reason}}" }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger_1", "target": "http_1" },
+    { "id": "e2", "source": "http_1", "target": "llm_1" },
+    { "id": "e3", "source": "llm_1", "target": "condition_1" },
+    { "id": "e4", "source": "condition_1", "target": "output_yes", "sourceHandle": "true" },
+    { "id": "e5", "source": "condition_1", "target": "output_no", "sourceHandle": "false" }
+  ],
+  "pinData": {}
+}

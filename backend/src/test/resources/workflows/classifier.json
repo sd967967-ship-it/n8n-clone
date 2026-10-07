@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "name": "Ticket Classifier",
+  "description": "Classify a support ticket with AI, then route on priority",
+  "nodes": [
+    {
+      "id": "trigger_1",
+      "type": "manual_trigger",
+      "name": "Ticket In",
+      "position": { "x": 100, "y": 200 },
+      "config": {
+        "payload": { "subject": "Login broken", "body": "I cannot log in since this morning." }
+      }
+    },
+    {
+      "id": "llm_1",
+      "type": "llm",
+      "name": "Classify",
+      "position": { "x": 400, "y": 200 },
+      "config": {
+        "model": "default",
+        "prompt": "Classify this ticket. Reply with JSON only.\nSubject: {{trigger_1.output.subject}}\nBody: {{trigger_1.output.body}}",
+        "outputFormat": "json",
+        "jsonShape": { "priority": "high|low", "reason": "string" }
+      }
+    },
+    {
+      "id": "condition_1",
+      "type": "condition",
+      "name": "Urgent?",
+      "position": { "x": 700, "y": 200 },
+      "config": { "expression": "llm_1.output.json.priority == 'high'" }
+    },
+    {
+      "id": "output_alert",
+      "type": "output",
+      "name": "Alert",
+      "position": { "x": 1000, "y": 100 },
+      "config": { "value": "HIGH priority: {{llm_1.output.json.reason}}" }
+    },
+    {
+      "id": "output_normal",
+      "type": "output",
+      "name": "Normal",
+      "position": { "x": 1000, "y": 300 },
+      "config": { "value": "Normal queue: {{llm_1.output.json.reason}}" }
+    }
+  ],
+  "edges": [
+    { "id": "e1", "source": "trigger_1", "target": "llm_1" },
+    { "id": "e2", "source": "llm_1", "target": "condition_1" },
+    { "id": "e3", "source": "condition_1", "target": "output_alert", "sourceHandle": "true" },
+    { "id": "e4", "source": "condition_1", "target": "output_normal", "sourceHandle": "false" }
+  ],
+  "pinData": {}
+}
