@@ -1,0 +1,14 @@
+app: hue
+displayName: Philips Hue
+category: other
+enabled: true
+auth:
+  type: urlToken
+baseUrl: "http://{{connection}}/api"
+operations:
+  - id: list_lights
+    displayName: List lights
+    method: GET
+    path: /lights
+    params: []
+triggers:

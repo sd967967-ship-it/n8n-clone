@@ -1,0 +1,14 @@
+app: outlook
+displayName: Outlook
+category: communication
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://graph.microsoft.com/v1.0"
+operations:
+  - id: list_messages
+    displayName: List messages
+    method: GET
+    path: /me/messages
+    params: []
+triggers:

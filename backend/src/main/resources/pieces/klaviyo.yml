@@ -1,0 +1,22 @@
+app: klaviyo
+displayName: Klaviyo
+category: crm
+enabled: true
+auth:
+  type: bearer
+  prefix: Klaviyo-API-Key
+baseUrl: "https://a.klaviyo.com/api"
+headers:
+  revision: 2024-10-15
+operations:
+  - id: list_profiles
+    displayName: List profiles
+    method: GET
+    path: /profiles
+    params: []
+  - id: create_profile
+    displayName: Create profile
+    method: POST
+    path: /profiles
+    params: [email]
+triggers:

@@ -1,0 +1,15 @@
+app: azure_openai
+displayName: Azure OpenAI
+category: ai
+enabled: true
+auth:
+  type: header
+  header: api-key
+baseUrl: "https://{{resource}}.openai.azure.com"
+operations:
+  - id: chat
+    displayName: Chat completion
+    method: POST
+    path: "/openai/deployments/{{deployment}}/chat/completions?api-version=2024-10-01"
+    params: [resource, deployment]
+triggers:

@@ -1,0 +1,20 @@
+app: activecampaign
+displayName: ActiveCampaign
+category: crm
+enabled: true
+auth:
+  type: header
+  header: Api-Token
+baseUrl: "https://{{account}}.api-us1.com/api/3"
+operations:
+  - id: list_contacts
+    displayName: List contacts
+    method: GET
+    path: /contacts
+    params: [account]
+  - id: create_contact
+    displayName: Create contact
+    method: POST
+    path: /contacts
+    params: [account, email]
+triggers:

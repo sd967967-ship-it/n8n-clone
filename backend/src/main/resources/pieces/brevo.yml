@@ -1,0 +1,20 @@
+app: brevo
+displayName: Brevo
+category: crm
+enabled: true
+auth:
+  type: header
+  header: api-key
+baseUrl: "https://api.brevo.com/v3"
+operations:
+  - id: send_email
+    displayName: Send email
+    method: POST
+    path: /smtp/email
+    params: [to, subject]
+  - id: create_contact
+    displayName: Create contact
+    method: POST
+    path: /contacts
+    params: [email]
+triggers:

@@ -1,0 +1,25 @@
+app: jira
+displayName: Jira
+category: developer
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://{{site}}.atlassian.net/rest/api/3"
+operations:
+  - id: get_issue
+    displayName: Get issue
+    method: GET
+    path: "/issue/{{key}}"
+    params: [site, key]
+  - id: create_issue
+    displayName: Create issue
+    method: POST
+    path: /issue
+    params: [site]
+triggers:
+  - id: new_issue
+    displayName: New issue
+    method: GET
+    path: "/search/jql?jql=created%3E-1d"
+    params: [site]
+    cursor: id

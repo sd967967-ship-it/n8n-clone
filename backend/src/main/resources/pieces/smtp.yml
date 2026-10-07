@@ -1,0 +1,14 @@
+app: smtp
+displayName: SMTP
+category: communication
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "smtp://{{connection}}"
+operations:
+  - id: send_email
+    displayName: Send email
+    method: POST
+    path: /send
+    params: [to, subject]
+triggers:

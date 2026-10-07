@@ -1,0 +1,20 @@
+app: pipedrive
+displayName: Pipedrive
+category: crm
+enabled: true
+auth:
+  type: query
+  queryParam: api_token
+baseUrl: "https://{{company}}.pipedrive.com/api/v1"
+operations:
+  - id: list_deals
+    displayName: List deals
+    method: GET
+    path: /deals
+    params: [company]
+  - id: create_deal
+    displayName: Create deal
+    method: POST
+    path: /deals
+    params: [company, title]
+triggers:

@@ -1,0 +1,14 @@
+app: onedrive
+displayName: OneDrive
+category: storage
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://graph.microsoft.com/v1.0"
+operations:
+  - id: list_root
+    displayName: List root
+    method: GET
+    path: /me/drive/root/children
+    params: []
+triggers:

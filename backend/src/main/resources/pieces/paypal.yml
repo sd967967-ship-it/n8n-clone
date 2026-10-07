@@ -1,0 +1,14 @@
+app: paypal
+displayName: PayPal
+category: ecommerce
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://api-m.paypal.com/v2"
+operations:
+  - id: get_order
+    displayName: Get order
+    method: GET
+    path: "/checkout/orders/{{id}}"
+    params: [id]
+triggers:

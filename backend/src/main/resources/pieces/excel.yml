@@ -1,0 +1,14 @@
+app: excel
+displayName: MS Excel
+category: productivity
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://graph.microsoft.com/v1.0"
+operations:
+  - id: list_worksheets
+    displayName: List worksheets
+    method: GET
+    path: "/me/drive/items/{{id}}/workbook/worksheets"
+    params: [id]
+triggers:

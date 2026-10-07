@@ -1,0 +1,14 @@
+app: x
+displayName: X (Twitter)
+category: social
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://api.twitter.com/2"
+operations:
+  - id: get_user
+    displayName: Get user
+    method: GET
+    path: /users/me
+    params: []
+triggers:

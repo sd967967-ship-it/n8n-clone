@@ -1,0 +1,26 @@
+app: dropbox
+displayName: Dropbox
+category: storage
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.dropboxapi.com/2"
+operations:
+  - id: list_folder
+    displayName: List folder
+    method: POST
+    path: /files/list_folder
+    params: [path]
+  - id: get_metadata
+    displayName: Get metadata
+    method: POST
+    path: /files/get_metadata
+    params: [path]
+  - id: upload
+    displayName: Upload file
+    method: POST
+    path: /files/upload
+    baseUrl: "https://content.dropboxapi.com/2"
+    params: [path]
+triggers:

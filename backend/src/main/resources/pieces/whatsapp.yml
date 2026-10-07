@@ -1,0 +1,15 @@
+app: whatsapp
+displayName: WhatsApp Business
+category: communication
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://graph.facebook.com/v20.0"
+operations:
+  - id: send_message
+    displayName: Send message
+    method: POST
+    path: "/{{phone_id}}/messages"
+    params: [phone_id]
+triggers:

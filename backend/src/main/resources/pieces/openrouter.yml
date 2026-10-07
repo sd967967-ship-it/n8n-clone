@@ -1,0 +1,20 @@
+app: openrouter
+displayName: OpenRouter
+category: ai
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://openrouter.ai/api/v1"
+operations:
+  - id: list_models
+    displayName: List models
+    method: GET
+    path: /models
+    params: []
+  - id: chat
+    displayName: Chat completion
+    method: POST
+    path: /chat/completions
+    params: [model]
+triggers:

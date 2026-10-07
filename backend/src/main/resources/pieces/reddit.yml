@@ -1,0 +1,14 @@
+app: reddit
+displayName: Reddit
+category: social
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://oauth.reddit.com/api/v1"
+operations:
+  - id: get_profile
+    displayName: Get profile
+    method: GET
+    path: /me
+    params: []
+triggers:

@@ -1,0 +1,26 @@
+app: stripe
+displayName: Stripe
+category: ecommerce
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.stripe.com/v1"
+operations:
+  - id: list_customers
+    displayName: List customers
+    method: GET
+    path: /customers
+    params: []
+  - id: create_payment
+    displayName: Create payment
+    method: POST
+    path: /payment_intents
+    params: [amount, currency]
+triggers:
+  - id: new_customer
+    displayName: New customer
+    method: GET
+    path: /customers
+    params: []
+    cursor: id

@@ -1,0 +1,14 @@
+app: postgres
+displayName: PostgreSQL
+category: database
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "postgres://{{connection}}"
+operations:
+  - id: query
+    displayName: Run query
+    method: POST
+    path: /query
+    params: [sql]
+triggers:

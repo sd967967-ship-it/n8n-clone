@@ -1,0 +1,14 @@
+app: docs
+displayName: Google Docs
+category: storage
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://docs.googleapis.com/v1/documents"
+operations:
+  - id: get_doc
+    displayName: Get document
+    method: GET
+    path: "/{{id}}"
+    params: [id]
+triggers:

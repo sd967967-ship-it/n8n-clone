@@ -1,0 +1,19 @@
+app: bitbucket
+displayName: Bitbucket
+category: developer
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://api.bitbucket.org/2.0"
+operations:
+  - id: get_repo
+    displayName: Get repository
+    method: GET
+    path: "/repositories/{{workspace}}/{{repo}}"
+    params: [workspace, repo]
+  - id: list_issues
+    displayName: List issues
+    method: GET
+    path: "/repositories/{{workspace}}/{{repo}}/issues"
+    params: [workspace, repo]
+triggers:

@@ -1,0 +1,19 @@
+app: s3
+displayName: AWS S3
+category: storage
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "https://s3.{{region}}.amazonaws.com"
+operations:
+  - id: list_objects
+    displayName: List objects
+    method: GET
+    path: "/{{bucket}}?list-type=2"
+    params: [region, bucket]
+  - id: get_object
+    displayName: Get object
+    method: GET
+    path: "/{{bucket}}/{{key}}"
+    params: [region, bucket, key]
+triggers:

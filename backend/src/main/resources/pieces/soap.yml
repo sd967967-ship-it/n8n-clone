@@ -1,0 +1,16 @@
+app: soap
+displayName: SOAP
+category: web
+enabled: true
+auth:
+  type: urlToken
+baseUrl: "{{connection}}"
+headers:
+  Content-Type: text/xml
+operations:
+  - id: call
+    displayName: Call action
+    method: POST
+    path: /
+    params: [action]
+triggers:

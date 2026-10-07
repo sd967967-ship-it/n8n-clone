@@ -1,0 +1,15 @@
+app: steam
+displayName: Steam
+category: other
+enabled: true
+auth:
+  type: query
+  queryParam: key
+baseUrl: "https://api.steampowered.com"
+operations:
+  - id: get_player
+    displayName: Get player
+    method: GET
+    path: /ISteamUser/GetPlayerSummaries/v0002
+    params: [steamids]
+triggers:

@@ -1,0 +1,15 @@
+app: plex
+displayName: Plex
+category: other
+enabled: true
+auth:
+  type: header
+  header: X-Plex-Token
+baseUrl: "https://{{server}}:32400"
+operations:
+  - id: list_libraries
+    displayName: List libraries
+    method: GET
+    path: /library/sections
+    params: [server]
+triggers:

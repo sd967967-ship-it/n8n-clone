@@ -1,0 +1,19 @@
+app: wordpress
+displayName: WordPress
+category: other
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://{{site}}/wp-json/wp/v2"
+operations:
+  - id: list_posts
+    displayName: List posts
+    method: GET
+    path: /posts
+    params: [site]
+  - id: create_post
+    displayName: Create post
+    method: POST
+    path: /posts
+    params: [site, title]
+triggers:

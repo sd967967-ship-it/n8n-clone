@@ -1,0 +1,14 @@
+app: azure_blob
+displayName: Azure Blob
+category: storage
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "https://{{account}}.blob.core.windows.net"
+operations:
+  - id: list_blobs
+    displayName: List blobs
+    method: GET
+    path: "/{{container}}?restype=container&comp=list"
+    params: [account, container]
+triggers:

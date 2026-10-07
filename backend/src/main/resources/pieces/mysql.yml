@@ -1,0 +1,14 @@
+app: mysql
+displayName: MySQL
+category: database
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "mysql://{{connection}}"
+operations:
+  - id: query
+    displayName: Run query
+    method: POST
+    path: /query
+    params: [sql]
+triggers:

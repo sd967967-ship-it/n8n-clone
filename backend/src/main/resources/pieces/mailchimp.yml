@@ -1,0 +1,19 @@
+app: mailchimp
+displayName: Mailchimp
+category: crm
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://{{dc}}.api.mailchimp.com/3.0"
+operations:
+  - id: list_members
+    displayName: List members
+    method: GET
+    path: "/lists/{{list}}/members"
+    params: [dc, list]
+  - id: add_member
+    displayName: Add member
+    method: POST
+    path: "/lists/{{list}}/members"
+    params: [dc, list, email_address]
+triggers:

@@ -1,0 +1,14 @@
+app: instagram
+displayName: Instagram
+category: social
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://graph.instagram.com/v20.0"
+operations:
+  - id: get_profile
+    displayName: Get profile
+    method: GET
+    path: /me
+    params: []
+triggers:

@@ -1,0 +1,14 @@
+app: bedrock
+displayName: AWS Bedrock
+category: ai
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "https://bedrock-runtime.{{region}}.amazonaws.com"
+operations:
+  - id: invoke
+    displayName: Invoke model
+    method: POST
+    path: "/model/{{model}}/invoke"
+    params: [region, model]
+triggers:

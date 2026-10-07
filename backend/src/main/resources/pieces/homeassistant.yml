@@ -1,0 +1,20 @@
+app: homeassistant
+displayName: Home Assistant
+category: other
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://{{host}}/api"
+operations:
+  - id: get_states
+    displayName: Get states
+    method: GET
+    path: /states
+    params: [host]
+  - id: call_service
+    displayName: Call service
+    method: POST
+    path: "/services/{{domain}}/{{service}}"
+    params: [host, domain, service]
+triggers:

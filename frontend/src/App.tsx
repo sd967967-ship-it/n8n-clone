@@ -18,6 +18,8 @@ const PALETTE: { type: NodeType; label: string }[] = [
   { type: "condition", label: "Condition" },
   { type: "transform", label: "Transform" },
   { type: "output", label: "Output" },
+  { type: "app_action", label: "App Action" },
+  { type: "app_trigger", label: "App Trigger" },
 ];
 
 export default function App() {

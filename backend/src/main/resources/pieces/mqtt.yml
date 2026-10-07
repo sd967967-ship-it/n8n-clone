@@ -1,0 +1,14 @@
+app: mqtt
+displayName: MQTT
+category: other
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "mqtt://{{connection}}"
+operations:
+  - id: publish
+    displayName: Publish
+    method: POST
+    path: /publish
+    params: [topic]
+triggers:

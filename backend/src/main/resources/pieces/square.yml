@@ -1,0 +1,15 @@
+app: square
+displayName: Square
+category: ecommerce
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://connect.squareup.com/v2"
+operations:
+  - id: list_payments
+    displayName: List payments
+    method: GET
+    path: /payments
+    params: []
+triggers:

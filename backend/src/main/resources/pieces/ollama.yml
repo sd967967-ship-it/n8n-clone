@@ -1,0 +1,19 @@
+app: ollama
+displayName: Ollama
+category: ai
+enabled: true
+auth:
+  type: none
+baseUrl: "http://127.0.0.1:11434"
+operations:
+  - id: tags
+    displayName: List models
+    method: GET
+    path: /api/tags
+    params: []
+  - id: generate
+    displayName: Generate
+    method: POST
+    path: /api/generate
+    params: [model, prompt]
+triggers:

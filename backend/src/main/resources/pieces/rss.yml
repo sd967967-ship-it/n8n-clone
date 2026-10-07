@@ -1,0 +1,14 @@
+app: rss
+displayName: RSS
+category: web
+enabled: true
+auth:
+  type: none
+baseUrl: "{{connection}}"
+operations:
+  - id: get_feed
+    displayName: Get feed
+    method: GET
+    path: /
+    params: []
+triggers:

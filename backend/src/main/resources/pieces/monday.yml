@@ -1,0 +1,16 @@
+app: monday
+displayName: Monday.com
+category: productivity
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.monday.com/v2"
+operations:
+  - id: list_boards
+    displayName: List boards
+    method: POST
+    path: /v2
+    params: []
+    body: {"query": "{ boards { id name } }"}
+triggers:

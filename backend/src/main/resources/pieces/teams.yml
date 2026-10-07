@@ -1,0 +1,14 @@
+app: teams
+displayName: MS Teams
+category: communication
+enabled: true
+auth:
+  type: urlToken
+baseUrl: "{{connection}}"
+operations:
+  - id: post_message
+    displayName: Post message
+    method: POST
+    path: /
+    params: [text]
+triggers:

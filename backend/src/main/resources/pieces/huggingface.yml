@@ -1,0 +1,15 @@
+app: huggingface
+displayName: Hugging Face
+category: ai
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api-inference.huggingface.co"
+operations:
+  - id: infer
+    displayName: Run inference
+    method: POST
+    path: "/models/{{model}}"
+    params: [model]
+triggers:

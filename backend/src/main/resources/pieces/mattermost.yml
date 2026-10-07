@@ -1,0 +1,20 @@
+app: mattermost
+displayName: Mattermost
+category: communication
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://{{server}}/api/v4"
+operations:
+  - id: create_post
+    displayName: Create post
+    method: POST
+    path: /posts
+    params: [server, channel_id, message]
+  - id: list_channels
+    displayName: List channels
+    method: GET
+    path: "/teams/{{team}}/channels"
+    params: [server, team]
+triggers:

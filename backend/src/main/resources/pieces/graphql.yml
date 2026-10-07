@@ -1,0 +1,14 @@
+app: graphql
+displayName: GraphQL
+category: web
+enabled: true
+auth:
+  type: urlToken
+baseUrl: "{{connection}}"
+operations:
+  - id: execute
+    displayName: Execute query
+    method: POST
+    path: /
+    params: [query]
+triggers:

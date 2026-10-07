@@ -1,0 +1,26 @@
+app: hubspot
+displayName: HubSpot
+category: crm
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.hubapi.com"
+operations:
+  - id: list_contacts
+    displayName: List contacts
+    method: GET
+    path: /crm/v3/objects/contacts
+    params: []
+  - id: create_contact
+    displayName: Create contact
+    method: POST
+    path: /crm/v3/objects/contacts
+    params: [email]
+triggers:
+  - id: new_contact
+    displayName: New contact
+    method: GET
+    path: /crm/v3/objects/contacts
+    params: []
+    cursor: id

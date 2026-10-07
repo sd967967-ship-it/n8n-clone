@@ -1,0 +1,14 @@
+app: mongodb
+displayName: MongoDB
+category: database
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "mongodb://{{connection}}"
+operations:
+  - id: find
+    displayName: Find documents
+    method: POST
+    path: /find
+    params: [collection]
+triggers:

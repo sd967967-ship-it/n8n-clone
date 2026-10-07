@@ -1,0 +1,14 @@
+app: twilio
+displayName: Twilio
+category: communication
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://api.twilio.com/2010-04-01"
+operations:
+  - id: send_sms
+    displayName: Send SMS
+    method: POST
+    path: "/Accounts/{{account}}/Messages.json"
+    params: [account, To, Body]
+triggers:

@@ -1,0 +1,26 @@
+app: airtable
+displayName: Airtable
+category: productivity
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.airtable.com/v0"
+operations:
+  - id: list_records
+    displayName: List records
+    method: GET
+    path: "/{{base}}/{{table}}"
+    params: [base, table]
+  - id: create_record
+    displayName: Create record
+    method: POST
+    path: "/{{base}}/{{table}}"
+    params: [base, table]
+triggers:
+  - id: new_record
+    displayName: New record
+    method: GET
+    path: "/{{base}}/{{table}}"
+    params: [base, table]
+    cursor: id

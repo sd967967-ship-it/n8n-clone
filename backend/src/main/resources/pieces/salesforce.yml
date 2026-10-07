@@ -1,0 +1,14 @@
+app: salesforce
+displayName: Salesforce
+category: crm
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://{{instance}}.salesforce.com/services/data/v60.0"
+operations:
+  - id: query
+    displayName: Query records
+    method: GET
+    path: /query
+    params: [instance]
+triggers:

@@ -1,0 +1,15 @@
+app: magento
+displayName: Magento
+category: ecommerce
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://{{site}}/rest/V1"
+operations:
+  - id: list_orders
+    displayName: List orders
+    method: GET
+    path: /orders
+    params: [site]
+triggers:

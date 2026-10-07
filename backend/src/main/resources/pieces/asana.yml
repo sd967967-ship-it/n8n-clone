@@ -1,0 +1,20 @@
+app: asana
+displayName: Asana
+category: productivity
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://app.asana.com/api/1.0"
+operations:
+  - id: list_tasks
+    displayName: List tasks
+    method: GET
+    path: /tasks
+    params: []
+  - id: create_task
+    displayName: Create task
+    method: POST
+    path: /tasks
+    params: [name]
+triggers:

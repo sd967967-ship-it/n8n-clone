@@ -1,0 +1,19 @@
+app: woocommerce
+displayName: WooCommerce
+category: ecommerce
+enabled: true
+auth:
+  type: basic
+baseUrl: "https://{{site}}/wp-json/wc/v3"
+operations:
+  - id: list_orders
+    displayName: List orders
+    method: GET
+    path: /orders
+    params: [site]
+  - id: create_product
+    displayName: Create product
+    method: POST
+    path: /products
+    params: [site, name]
+triggers:

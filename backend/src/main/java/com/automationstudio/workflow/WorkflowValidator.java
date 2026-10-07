@@ -6,6 +6,8 @@ import com.automationstudio.expression.ExpressionParser;
 import com.automationstudio.expression.ParseException;
 import com.automationstudio.expression.RefResolver;
 import com.automationstudio.expression.TemplateRenderer;
+import com.automationstudio.pieces.PieceManifest;
+import com.automationstudio.pieces.PieceRegistry;
 import java.net.InetAddress;
 import java.net.URI;
 import java.util.ArrayDeque;
@@ -25,7 +27,8 @@ import java.util.regex.Pattern;
 public class WorkflowValidator {
 
   private static final Set<String> MVP_TYPES =
-      Set.of("manual_trigger", "http_request", "llm", "condition", "transform", "output");
+      Set.of("manual_trigger", "http_request", "llm", "condition", "transform", "output",
+          "app_action", "app_trigger");
 
   private static final Pattern ID_PATTERN = Pattern.compile("[a-z0-9_]+");
   private static final Set<String> ALLOWED_ON_ERROR = Set.of("stop", "continue", "route");
@@ -243,6 +246,7 @@ public class WorkflowValidator {
         }
       }
       case "output" -> { /* value optional */ }
+      case "app_action", "app_trigger" -> validateAppNode(n, cfg, errors, allIds, upstreamIds);
       default -> { /* unknown type already reported */ }
     }
 
@@ -302,6 +306,76 @@ public class WorkflowValidator {
     } else if (e instanceof Expr.Comparison c) {
       collectBadFunctions(c.left(), out);
       collectBadFunctions(c.right(), out);
+    }
+  }
+
+  // --- app pieces (generic app_action / app_trigger) ---
+
+  private static volatile PieceRegistry registry;
+
+  private static PieceRegistry pieces() {
+    if (registry == null) {
+      synchronized (WorkflowValidator.class) {
+        if (registry == null) registry = PieceRegistry.loadAll();
+      }
+    }
+    return registry;
+  }
+
+  private void validateAppNode(
+      WorkflowDefinition.Node n,
+      Map<String, Object> cfg,
+      List<ValidationIssue> errors,
+      Set<String> allIds,
+      Set<String> upstreamIds) {
+    Object app = cfg.get("app");
+    if (blank(app)) {
+      errors.add(ValidationIssue.error("MISSING_CONFIG", n.id(), "config.app", "App is required"));
+      return;
+    }
+    PieceManifest manifest;
+    try {
+      manifest = pieces().get(app.toString());
+    } catch (IllegalStateException e) {
+      errors.add(ValidationIssue.error("UNKNOWN_APP", n.id(), "config.app",
+          "Piece registry failed to load: " + e.getMessage()));
+      return;
+    }
+    if (manifest == null) {
+      errors.add(ValidationIssue.error("UNKNOWN_APP", n.id(), "config.app",
+          "Unknown app: " + app));
+      return;
+    }
+    if (!manifest.enabled()) {
+      errors.add(ValidationIssue.error("UNKNOWN_APP", n.id(), "config.app",
+          "App '" + app + "' needs OAuth2 (deferred to the OAuth slice)"));
+      return;
+    }
+    boolean isTrigger = "app_trigger".equals(n.type());
+    if (isTrigger) {
+      Object event = cfg.get("event");
+      if (blank(event)) {
+        errors.add(ValidationIssue.error("MISSING_CONFIG", n.id(), "config.event", "Event is required"));
+      } else if (manifest.triggers() == null
+          || manifest.triggers().stream().noneMatch(t -> t.id().equals(event.toString()))) {
+        errors.add(ValidationIssue.error("UNKNOWN_OPERATION", n.id(), "config.event",
+            "Unknown event '" + event + "' for app " + app));
+      }
+    } else {
+      Object op = cfg.get("operation");
+      if (blank(op)) {
+        errors.add(ValidationIssue.error("MISSING_CONFIG", n.id(), "config.operation",
+            "Operation is required"));
+      } else if (manifest.operations().stream().noneMatch(o -> o.id().equals(op.toString()))) {
+        errors.add(ValidationIssue.error("UNKNOWN_OPERATION", n.id(), "config.operation",
+            "Unknown operation '" + op + "' for app " + app));
+      }
+    }
+    // connection required unless auth.type == none
+    String authType = manifest.auth() == null ? "none" : manifest.auth().type();
+    if (!"none".equals(authType) && blank(cfg.get("connection"))) {
+      errors.add(ValidationIssue.error("MISSING_CONNECTION", n.id(), "config.connection",
+          "Connection is required for app " + app));
     }
   }
 

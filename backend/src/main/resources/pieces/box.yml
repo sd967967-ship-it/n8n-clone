@@ -1,0 +1,20 @@
+app: box
+displayName: Box
+category: storage
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.box.com/2.0"
+operations:
+  - id: list_folder
+    displayName: List folder
+    method: GET
+    path: "/folders/{{id}}/items"
+    params: [id]
+  - id: get_file
+    displayName: Get file
+    method: GET
+    path: "/files/{{id}}"
+    params: [id]
+triggers:

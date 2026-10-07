@@ -1,0 +1,16 @@
+app: linear
+displayName: Linear
+category: developer
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.linear.app/graphql"
+operations:
+  - id: list_issues
+    displayName: List issues
+    method: POST
+    path: /graphql
+    params: []
+    body: {"query": "{ issues { nodes { id title } } }"}
+triggers:

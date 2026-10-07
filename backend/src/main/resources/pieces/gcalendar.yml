@@ -1,0 +1,14 @@
+app: gcalendar
+displayName: Google Calendar
+category: storage
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://www.googleapis.com/calendar/v3/calendars"
+operations:
+  - id: list_events
+    displayName: List events
+    method: GET
+    path: "/{{id}}/events"
+    params: [id]
+triggers:

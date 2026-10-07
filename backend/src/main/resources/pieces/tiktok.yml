@@ -1,0 +1,14 @@
+app: tiktok
+displayName: TikTok
+category: social
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://open.tiktokapis.com/v2"
+operations:
+  - id: get_profile
+    displayName: Get profile
+    method: GET
+    path: /user/info/
+    params: []
+triggers:

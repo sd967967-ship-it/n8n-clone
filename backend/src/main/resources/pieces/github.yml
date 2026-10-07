@@ -1,0 +1,33 @@
+app: github
+displayName: GitHub
+category: developer
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.github.com"
+headers:
+  Accept: application/vnd.github+json
+operations:
+  - id: get_repo
+    displayName: Get repository
+    method: GET
+    path: "/repos/{{owner}}/{{repo}}"
+    params: [owner, repo]
+  - id: list_issues
+    displayName: List issues
+    method: GET
+    path: "/repos/{{owner}}/{{repo}}/issues"
+    params: [owner, repo]
+  - id: create_issue
+    displayName: Create issue
+    method: POST
+    path: "/repos/{{owner}}/{{repo}}/issues"
+    params: [owner, repo, title]
+triggers:
+  - id: new_issue
+    displayName: New issue
+    method: GET
+    path: "/repos/{{owner}}/{{repo}}/issues"
+    params: [owner, repo]
+    cursor: id

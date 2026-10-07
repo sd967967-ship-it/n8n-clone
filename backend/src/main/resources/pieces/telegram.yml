@@ -1,0 +1,20 @@
+app: telegram
+displayName: Telegram
+category: communication
+enabled: true
+auth:
+  type: urlToken
+baseUrl: "https://api.telegram.org/bot{{connection}}"
+operations:
+  - id: send_message
+    displayName: Send message
+    method: POST
+    path: /sendMessage
+    params: [chat_id, text]
+triggers:
+  - id: updates
+    displayName: New update
+    method: GET
+    path: /getUpdates
+    params: []
+    cursor: update_id

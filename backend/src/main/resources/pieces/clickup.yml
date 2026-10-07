@@ -1,0 +1,26 @@
+app: clickup
+displayName: ClickUp
+category: developer
+enabled: true
+auth:
+  type: header
+  header: Authorization
+baseUrl: "https://api.clickup.com/api/v2"
+operations:
+  - id: get_task
+    displayName: Get task
+    method: GET
+    path: "/task/{{id}}"
+    params: [id]
+  - id: create_task
+    displayName: Create task
+    method: POST
+    path: "/list/{{list}}/task"
+    params: [list, name]
+triggers:
+  - id: new_task
+    displayName: New task
+    method: GET
+    path: "/list/{{list}}/task"
+    params: [list]
+    cursor: id

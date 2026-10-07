@@ -1,0 +1,22 @@
+app: intercom
+displayName: Intercom
+category: crm
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.intercom.io"
+headers:
+  Intercom-Version: 2.11
+operations:
+  - id: list_contacts
+    displayName: List contacts
+    method: GET
+    path: /contacts
+    params: []
+  - id: create_contact
+    displayName: Create contact
+    method: POST
+    path: /contacts
+    params: [email]
+triggers:

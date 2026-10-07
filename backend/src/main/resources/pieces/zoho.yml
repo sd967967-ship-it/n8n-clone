@@ -1,0 +1,14 @@
+app: zoho
+displayName: Zoho CRM
+category: crm
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://www.zohoapis.com/crm/v7"
+operations:
+  - id: list_contacts
+    displayName: List contacts
+    method: GET
+    path: /Contacts
+    params: []
+triggers:

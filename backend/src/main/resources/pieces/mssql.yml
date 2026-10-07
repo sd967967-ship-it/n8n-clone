@@ -1,0 +1,14 @@
+app: mssql
+displayName: SQL Server
+category: database
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "mssql://{{connection}}"
+operations:
+  - id: query
+    displayName: Run query
+    method: POST
+    path: /query
+    params: [sql]
+triggers:

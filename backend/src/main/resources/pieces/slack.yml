@@ -1,0 +1,26 @@
+app: slack
+displayName: Slack
+category: communication
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://slack.com/api"
+operations:
+  - id: post_message
+    displayName: Post message
+    method: POST
+    path: /chat.postMessage
+    params: [channel, text]
+  - id: list_channels
+    displayName: List channels
+    method: GET
+    path: /conversations.list
+    params: []
+triggers:
+  - id: new_message
+    displayName: New message
+    method: GET
+    path: /conversations.history
+    params: [channel]
+    cursor: ts

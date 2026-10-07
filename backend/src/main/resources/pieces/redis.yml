@@ -1,0 +1,14 @@
+app: redis
+displayName: Redis
+category: database
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "redis://{{connection}}"
+operations:
+  - id: get
+    displayName: Get key
+    method: POST
+    path: /get
+    params: [key]
+triggers:

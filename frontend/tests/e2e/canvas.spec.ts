@@ -20,6 +20,8 @@ test.describe("canvas smoke @smoke", () => {
       "condition",
       "transform",
       "output",
+      "app_action",
+      "app_trigger",
     ]) {
       await expect(page.getByTestId(`palette-${t}`)).toBeVisible();
     }

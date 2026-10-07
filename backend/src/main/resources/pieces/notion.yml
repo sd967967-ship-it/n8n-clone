@@ -1,0 +1,28 @@
+app: notion
+displayName: Notion
+category: developer
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.notionapi.com/v1"
+headers:
+  Notion-Version: 2022-06-13
+operations:
+  - id: query_db
+    displayName: Query database
+    method: POST
+    path: "/databases/{{id}}/query"
+    params: [id]
+  - id: create_page
+    displayName: Create page
+    method: POST
+    path: /pages
+    params: []
+triggers:
+  - id: new_page
+    displayName: New page
+    method: POST
+    path: "/databases/{{id}}/query"
+    params: [id]
+    cursor: id

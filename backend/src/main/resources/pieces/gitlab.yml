@@ -1,0 +1,31 @@
+app: gitlab
+displayName: GitLab
+category: developer
+enabled: true
+auth:
+  type: header
+  header: PRIVATE-TOKEN
+baseUrl: "https://gitlab.com/api/v4"
+operations:
+  - id: get_project
+    displayName: Get project
+    method: GET
+    path: "/projects/{{id}}"
+    params: [id]
+  - id: list_issues
+    displayName: List issues
+    method: GET
+    path: "/projects/{{id}}/issues"
+    params: [id]
+  - id: create_issue
+    displayName: Create issue
+    method: POST
+    path: "/projects/{{id}}/issues"
+    params: [id, title]
+triggers:
+  - id: new_issue
+    displayName: New issue
+    method: GET
+    path: "/projects/{{id}}/issues"
+    params: [id]
+    cursor: id

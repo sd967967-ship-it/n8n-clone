@@ -1,0 +1,14 @@
+app: zapier
+displayName: Zapier
+category: productivity
+enabled: true
+auth:
+  type: urlToken
+baseUrl: "{{connection}}"
+operations:
+  - id: trigger
+    displayName: Fire hook
+    method: POST
+    path: /
+    params: []
+triggers:

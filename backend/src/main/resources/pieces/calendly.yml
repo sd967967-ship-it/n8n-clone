@@ -1,0 +1,21 @@
+app: calendly
+displayName: Calendly
+category: productivity
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://api.calendly.com"
+operations:
+  - id: list_events
+    displayName: List events
+    method: GET
+    path: /scheduled_events
+    params: []
+triggers:
+  - id: new_event
+    displayName: New event
+    method: GET
+    path: /scheduled_events
+    params: []
+    cursor: uri

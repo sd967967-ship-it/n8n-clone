@@ -4,7 +4,9 @@ export type NodeType =
   | "llm"
   | "condition"
   | "transform"
-  | "output";
+  | "output"
+  | "app_action"
+  | "app_trigger";
 
 export interface WorkflowNodeData {
   label: string;

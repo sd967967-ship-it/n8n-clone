@@ -1,0 +1,20 @@
+app: discord
+displayName: Discord
+category: communication
+enabled: true
+auth:
+  type: bearer
+  prefix: Bearer
+baseUrl: "https://discord.com/api/v10"
+operations:
+  - id: send_message
+    displayName: Send message
+    method: POST
+    path: "/channels/{{channel}}/messages"
+    params: [channel, content]
+  - id: get_channel
+    displayName: Get channel
+    method: GET
+    path: "/channels/{{channel}}"
+    params: [channel]
+triggers:

@@ -1,0 +1,14 @@
+app: sqlite
+displayName: SQLite
+category: database
+enabled: true
+auth:
+  type: connectionString
+baseUrl: "file://{{connection}}"
+operations:
+  - id: query
+    displayName: Run query
+    method: POST
+    path: /query
+    params: [sql]
+triggers:

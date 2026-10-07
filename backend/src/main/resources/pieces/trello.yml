@@ -1,0 +1,26 @@
+app: trello
+displayName: Trello
+category: developer
+enabled: true
+auth:
+  type: query
+  queryParams: [key, token]
+baseUrl: "https://api.trello.com/1"
+operations:
+  - id: get_board
+    displayName: Get board
+    method: GET
+    path: "/boards/{{id}}"
+    params: [id]
+  - id: create_card
+    displayName: Create card
+    method: POST
+    path: /cards
+    params: [idList, name]
+triggers:
+  - id: new_card
+    displayName: New card
+    method: GET
+    path: "/lists/{{id}}/cards"
+    params: [id]
+    cursor: id

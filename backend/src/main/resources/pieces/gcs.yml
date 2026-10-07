@@ -1,0 +1,14 @@
+app: gcs
+displayName: Google Cloud Storage
+category: storage
+enabled: false
+auth:
+  type: oauth2
+baseUrl: "https://storage.googleapis.com/storage/v1"
+operations:
+  - id: list_objects
+    displayName: List objects
+    method: GET
+    path: "/b/{{bucket}}/o"
+    params: [bucket]
+triggers:
