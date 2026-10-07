@@ -119,6 +119,7 @@ public class ExecutionEngine {
     });
     Map<String, Map<String, Object>> outputs = new ConcurrentHashMap<>();
     Map<String, String> nodeStatus = new ConcurrentHashMap<>();
+    Map<String, Object> triggerPayload = parsePayload(exec.triggerPayloadJson);
     // seed trigger as delivered from a virtual edge
     if (triggerId != null) {
       resolved.put(triggerId, incoming.get(triggerId).size());
@@ -232,7 +233,7 @@ public class ExecutionEngine {
             return;
           }
           handleResult(id, node, result, exec, nodeStatus, outputs, outgoing, resolved,
-              delivered, executionId);
+              delivered, executionId, id.equals(triggerId) ? triggerPayload : null);
           if ("stop".equals(onError(node)) && "FAILED".equals(result.status())) {
             stopFailed = true;
             stopError = result.error();
@@ -250,7 +251,7 @@ public class ExecutionEngine {
         skip(id, exec, nodeStatus, outgoing, resolved, delivered, executionId);
       }
     }
-    finish(exec, stopFailed, stopError, outputs, executionId);
+    finish(exec, stopFailed, stopError, outputs, executionId, nodes);
     running.remove(executionId);
     cancelFlags.remove(executionId);
   }
@@ -261,12 +262,14 @@ public class ExecutionEngine {
       String id, WorkflowDefinition.Node node, NodeResult result, ExecutionEntity exec,
       Map<String, String> nodeStatus, Map<String, Map<String, Object>> outputs,
       Map<String, List<WorkflowDefinition.Edge>> outgoing, Map<String, Integer> resolved,
-      Map<String, Integer> delivered, UUID executionId) {
+      Map<String, Integer> delivered, UUID executionId, Map<String, Object> triggerOverlay) {
     String onError = onError(node);
     boolean failed = "FAILED".equals(result.status());
     if (!failed) {
       nodeStatus.put(id, "SUCCESS");
-      Map<String, Object> out = result.output() == null ? Map.of() : result.output();
+      Map<String, Object> out = new LinkedHashMap<>(
+          result.output() == null ? Map.of() : result.output());
+      if (triggerOverlay != null && !triggerOverlay.isEmpty()) out.putAll(triggerOverlay);
       outputs.put(id, out);
       persistDone(exec, id, "SUCCESS", null, out, result.durationMs());
       events.publish(executionId, "node.succeeded", id, Map.of("nodeId", id));
@@ -444,10 +447,16 @@ public class ExecutionEngine {
   // ---- finish ----
 
   private void finish(ExecutionEntity exec, boolean stopFailed, String stopError,
-      Map<String, Map<String, Object>> outputs, UUID executionId) {
-    // result = output node value(s) that ran
+      Map<String, Map<String, Object>> outputs, UUID executionId,
+      Map<String, WorkflowDefinition.Node> nodes) {
+    // result = output of the output node(s) that ran
     Map<String, Object> result = new LinkedHashMap<>();
-    for (var e : outputs.entrySet()) result.put(e.getKey(), e.getValue().get("value"));
+    for (var e : outputs.entrySet()) {
+      WorkflowDefinition.Node n = nodes.get(e.getKey());
+      if (n != null && "output".equals(n.type()) && e.getValue().containsKey("value")) {
+        result.put(e.getKey(), e.getValue().get("value"));
+      }
+    }
     exec.resultJson = serialize(result.isEmpty() ? Map.of() : result);
     exec.finishedAt = Instant.now();
     if (stopFailed) {
@@ -500,5 +509,19 @@ public class ExecutionEngine {
 
   private static String id(UUID id) {
     return id.toString();
+  }
+
+  private Map<String, Object> parsePayload(String raw) {
+    if (raw == null || raw.isBlank()) return Map.of();
+    try {
+      Object o = json.readValue(raw, Object.class);
+      if (o instanceof Map<?, ?> m) {
+        Map<String, Object> out = new LinkedHashMap<>();
+        m.forEach((k, v) -> out.put(k.toString(), v));
+        return out;
+      }
+    } catch (Exception ignored) {
+    }
+    return Map.of();
   }
 }

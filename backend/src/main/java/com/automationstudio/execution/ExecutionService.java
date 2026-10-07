@@ -55,8 +55,15 @@ public class ExecutionService {
       exec.triggerPayloadJson = "{}";
     }
     executionRepo.save(exec);
-    // merge manual payload into trigger output at runtime via trigger_payload
-    engine.submit(exec.id);
+    // dispatch only after the row commits, or the engine thread cannot see it
+    org.springframework.transaction.support.TransactionSynchronizationManager
+        .registerSynchronization(
+            new org.springframework.transaction.support.TransactionSynchronization() {
+              @Override
+              public void afterCommit() {
+                engine.submit(exec.id);
+              }
+            });
     return exec.id;
   }
 

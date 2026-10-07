@@ -3,6 +3,8 @@ package com.automationstudio.execution;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "executions")
@@ -14,14 +16,17 @@ public class ExecutionEntity {
   @Column(name = "workflow_version", nullable = false)
   public int workflowVersion;
   @Column(name = "definition_snapshot_json", nullable = false, columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String definitionSnapshotJson;
   @Column(nullable = false)
   public String status = "QUEUED";
   @Column(name = "trigger_type", nullable = false)
   public String triggerType = "manual";
   @Column(name = "trigger_payload_json", nullable = false, columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String triggerPayloadJson = "{}";
   @Column(name = "result_json", columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String resultJson;
   @Column(name = "started_at", nullable = false)
   public Instant startedAt;

@@ -3,6 +3,8 @@ package com.automationstudio.execution;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "execution_nodes")
@@ -18,8 +20,10 @@ public class ExecutionNodeEntity {
   @Column(nullable = false)
   public String status = "WAITING";
   @Column(name = "input_json", columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String inputJson;
   @Column(name = "output_json", columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String outputJson;
   @Column(name = "output_size_bytes", nullable = false)
   public int outputSizeBytes;

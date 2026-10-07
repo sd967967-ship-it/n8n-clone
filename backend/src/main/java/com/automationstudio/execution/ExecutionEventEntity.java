@@ -3,6 +3,8 @@ package com.automationstudio.execution;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "execution_events",
@@ -19,6 +21,7 @@ public class ExecutionEventEntity {
   @Column(name = "node_id")
   public String nodeId;
   @Column(name = "payload_json", nullable = false, columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String payloadJson = "{}";
   @Column(name = "created_at", nullable = false)
   public Instant createdAt;

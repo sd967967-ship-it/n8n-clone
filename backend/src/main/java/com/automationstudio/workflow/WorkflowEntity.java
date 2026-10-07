@@ -3,6 +3,8 @@ package com.automationstudio.workflow;
 import jakarta.persistence.*;
 import java.time.Instant;
 import java.util.UUID;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "workflows")
@@ -14,6 +16,7 @@ public class WorkflowEntity {
   @Column(nullable = false)
   public String description = "";
   @Column(name = "definition_json", nullable = false, columnDefinition = "jsonb")
+  @JdbcTypeCode(SqlTypes.JSON)
   public String definitionJson = "{}";
   @Column(nullable = false)
   public String status = "DRAFT";
